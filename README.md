@@ -2,9 +2,9 @@
 
 ## Summary
 
-This is proof of concept code to import a list of domains from a CSV file into Umbrella as Internal Domains.  Internal Domains cause Umbrella Virtual Appliances and Roaming Clients to pass through the specified domains to their local resolvers.
+This is proof of concept code to import a list of domains from a CSV file or URL into Cisco Umbrella as Internal Domains.  Internal Domains cause Umbrella Virtual Appliances and Roaming Clients to pass through the specified domains to their local resolvers.
 
-An example use case for this is would be to import the domains of a globally distributed cloud application in order access a more localized datacenter, rather than using the "closest" datacenter from the perspective of Umbrella.  This can also help with Chinese domains where "mainland" resolution is desired.  Umbrella doesn't currently have a datacenter in mainland China, so most Chinese domain resolution will return the externally available IPs.
+An example use case for this is would be to import the domains of a globally distributed cloud application in order access a more localized datacenter, rather than using the "closest" datacenter from the perspective of Umbrella.  This can also help with Chinese domains where "mainland" resolution is desired.  Umbrella doesn't currently have a datacenter in mainland China, so most Chinese domain resolution will return the non-mainland/externally available IPs.
 
 ## Requirements
 
@@ -27,8 +27,8 @@ An example use case for this is would be to import the domains of a globally dis
     - UMBRELLA_API_MANAGEMENT_KEY: The Umbrella Management API Key to be used. (String)
     - UMBRELLA_API_MANAGEMENT_SECRET: The Umbrella Management API Secret to be used. (String)
 2. Install the required packages from the ***requirements.txt*** file.
-    * You'll probably want to set up a virtual environment: [Python 'venv' Tutorial](https://docs.python.org/3/tutorial/venv.html)
     * ```pip install -r requirements.txt```
+    * If running locally, you'll probably want to set up a virtual environment: [Python 'venv' Tutorial](https://docs.python.org/3/tutorial/venv.html)
     * Activate the Python virtual environment, if you created one.
 4. Run the script with ```python umbrella_internal_domains.py```
 
