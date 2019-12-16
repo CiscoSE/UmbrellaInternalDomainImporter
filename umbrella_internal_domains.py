@@ -21,8 +21,6 @@ from requests.auth import HTTPBasicAuth
 
 load_dotenv()
 
-csv_domains = []
-
 
 def load_csv():
     """
@@ -31,9 +29,12 @@ def load_csv():
 
     print("Importing CSV File...")
 
+    # Instantiate a list
+    csv_domains = []
+
     try:
         # Get the desired file name
-        file_name = os.getenv("CSV_FILENAME")
+        file_name = os.getenv("DOMAIN_CSV")
 
         # Try to read the specified CSV file
         with open(file_name) as csv_file:
@@ -42,13 +43,52 @@ def load_csv():
             # Add each domain to a list
             for domain in csv_reader:
                 csv_domains.append(domain[0])
-
+            
+            return csv_domains
     except:
         print(f"There was an issue reading the specified filename '{file_name}'.")
-        print("Please check the CSV_FILENAME configuration in the '.env' file, and verify the file format.")
+        print("Please check the DOMAIN_CSV configuration in the '.env' file, and verify the file format.")
         exit(1)
 
-    print(f"CSV file successfully imported.")
+    print("CSV file successfully imported.")
+
+
+def load_url():
+    """
+    This function loads domains from the specified URL.
+    """
+
+    print("Importing URL...")
+
+    # Instatiate a list
+    url_domains = []
+
+    try:
+        # Get the desired URL
+        url = os.getenv("DOMAIN_URL")
+
+        # Try to fetch the URL
+        request = requests.get(url)
+
+        # Check to make sure the GET was successful
+        if request.status_code == 200:
+            print("Internal Domains successfully retrieved.")
+
+            # Add each domain to our list
+            for domain in request.iter_lines():
+                url_domains.append(domain)
+
+            return url_domains
+        else:
+            print(f"URL List Connection Failure - HTTP Return Code: {request.status_code}\nResponse: {request.text}")
+            exit(1)
+
+    except:
+        print(f"There was an issue reading the specified URL: '{url}'.")
+        print("Please check the DOMAIN_URL configuration in the '.env' file, and verify the content format.")
+        exit(1)
+
+    print("URL successfully imported.")
 
 
 def get_umbrella_internal_domains():
@@ -115,26 +155,37 @@ def main():
     This is the main function to run the logic of the Internal Domain importer.
     """
 
-    # Load the CSV file
-    load_csv()
+    # Instantiate a list
+    pending_internal_domains = []
+
+    if os.getenv("DOMAIN_CSV"):
+        # Load the CSV file
+        pending_internal_domains += load_csv()
+    
+    if os.getenv("DOMAIN_URL"):
+        # Load the URL
+        pending_internal_domains += load_url()
 
     # Get the current Umbrella Internal Domains
-    umbrella_domains = get_umbrella_internal_domains()
+    umbrella_internal_domains = get_umbrella_internal_domains()
 
     temp_list = []
 
     # Format the Umbrella Internal Domains
-    for internal_domain in umbrella_domains:
-        temp_list.append(internal_domain['domain'])
+    for umbrella_internal_domain in umbrella_internal_domains:
+        temp_list.append(umbrella_internal_domain['domain'])
 
-    umbrella_domains = temp_list
+    umbrella_internal_domains = temp_list
+
+    print(pending_internal_domains)
+    print(umbrella_internal_domains)
 
     # Get a list of domains that are in our CSV that don't exist in Umbrella
-    pending_domains = list(set(csv_domains) - set(umbrella_domains))
+    pending_internal_domains = list(set(pending_internal_domains) - set(umbrella_internal_domains))
 
     # Add each pending domain to Umbrella Internal Domains
-    for new_domain in pending_domains:
-        post_umbrella_internal_domain(new_domain)
+    for pending_internal_domain in pending_internal_domains:
+        post_umbrella_internal_domain(pending_internal_domain)
 
 if __name__ == "__main__":
 

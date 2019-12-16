@@ -20,7 +20,8 @@ An example use case for this is would be to import the domains of a globally dis
 1. Prior to running the script for the first time, copy the ***.env.example*** to ***.env***.
     * ```cp .env.example .env```
 2. Open the ***.env*** file and configure the file and Umbrella parameters.
-    - CSV_FILENAME: The file name of the CSV file containing the desired domains. (String)
+    - DOMAIN_CSV: The file name of the CSV file containing the desired domains. (String)
+    - DOMAIN_URL: A URL containing the desired domains, one domain per line. (String)
     - INTERVAL: The refresh interval, in seconds, between subsequent checks when running as a daemon. (Integer)
     - UMBRELLA_API_ORG_ID: The Organization ID of your Umbrella instance. (Integer)
     - UMBRELLA_API_MANAGEMENT_KEY: The Umbrella Management API Key to be used. (String)
@@ -40,7 +41,3 @@ This script is Docker friendly, and can be deployed as a container.  Once the **
 You can then run the container as a daemon with the following command:
 
 - ```docker run -d --name umbrella-internal-domains umbrella-internal-domains```
-
-## To-Do
-
-- Fetch desired domains from a URL, rather than a CSV.  This would make running the script as a daemon much more practical.
