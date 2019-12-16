@@ -150,7 +150,7 @@ if __name__ == "__main__":
 
         while True:
             main()
-            print(f"Waiting {interval} seconds...".format(interval))
+            print(f"Waiting {interval} seconds...")
             time.sleep(interval)
     else:
         main()
