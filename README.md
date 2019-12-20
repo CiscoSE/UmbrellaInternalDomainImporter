@@ -2,9 +2,19 @@
 
 ## Summary
 
-This is proof of concept code to import a list of domains from a CSV file or URL into Cisco Umbrella as Internal Domains.  Internal Domains cause Umbrella Virtual Appliances and Roaming Clients to pass through the specified domains to their local resolvers.
+This is proof-of-concept code to import a list of domains from a CSV file or URL into Cisco Umbrella as Internal Domains.  Internal Domains cause Umbrella Virtual Appliances and Roaming Clients to pass through the specified domains to their local resolvers.  This is most commonly used for internal domain resolution - as the name implies - but can be used in other scenarios as well.
 
 An example use case for this is would be to import the domains of a globally distributed cloud application in order access a more localized datacenter, rather than using the "closest" datacenter from the perspective of Umbrella.  This can also help with Chinese domains where "mainland" resolution is desired.  Umbrella doesn't currently have a datacenter in mainland China, so most Chinese domain resolution will return the non-mainland/externally available IPs.
+
+This code essentially has two operating modes.  An ad-hoc import can be performed simply by running the script with python, or repetitive imports can be performed by running the script with the "-d" argument or as a container.
+
+For ad-hoc updates, it's recommended to use a CSV file and configure the DOMAIN_CSV environment variable in the **.env** file.
+
+![Ad-hoc](img/ad-hoc.png)
+
+For repetitive updates, it's recommended to fetch updates from a web server by configuring the DOMAIN_URL environment variable in the **.env** file.
+
+![Repetitive](img/repetitive.png)
 
 ## Requirements
 
