@@ -10,7 +10,7 @@ This code essentially has two operating modes.  An ad-hoc import can be performe
 
 For ad-hoc updates, it's recommended to use a CSV file and configure the DOMAIN_CSV environment variable in the **.env** file.
 
-![Ad-hoc](img/ad-hoc.png)
+![Ad-hoc](img/adhoc.png)
 
 For repetitive updates, it's recommended to fetch updates from a web server by configuring the DOMAIN_URL environment variable in the **.env** file.
 
