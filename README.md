@@ -1,5 +1,7 @@
 # Umbrella Internal Domain Importer
 
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/CiscoSE/UmbrellaInternalDomainImporter)
+
 ## Summary
 
 This is proof-of-concept code to import a list of domains from a CSV file or URL into Cisco Umbrella as Internal Domains.  Internal Domains cause Umbrella Virtual Appliances and Roaming Clients to pass through the specified domains to their local resolvers.  This is most commonly used for internal domain resolution - as the name implies - but can be used in other scenarios as well.
